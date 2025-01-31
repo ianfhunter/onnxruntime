@@ -410,7 +410,7 @@ bool CanApplyFlashAttention(const Tensor* bias, const Tensor* present_key, const
   // batch_size > 1. What bias is used for is not clear, so it is not implemented in the shader.
   // The Flash attention implementation is vectorized, to keep things simple, only vec4 is implemented -
   // this implies that head_size has to be a multiple of 4.
-  return context.DeviceLimits().maxComputeWorkgroupSizeX >= (kMinSupportedSubgroupSize * kMinSupportedSubgroupSize) &&
+  return false && context.DeviceLimits().maxComputeWorkgroupSizeX >= (kMinSupportedSubgroupSize * kMinSupportedSubgroupSize) &&
          parameters.batch_size_ == 1 &&
          bias == nullptr &&
          present_key != nullptr && present_value != nullptr && present_key->SizeInBytes() > 0 &&
